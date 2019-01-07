@@ -1,0 +1,36 @@
+---
+- name: Disable UFW
+  become: yes
+  command: ufw disable
+
+- name: Deny incoming traffic by default
+  become: yes
+  command: ufw default deny incoming
+
+- name: Allow outgoing traffic by default
+  become: yes
+  command: ufw default allow outgoing
+
+- name: Allow incoming ssh traffic
+  become: yes
+  command: ufw allow ssh
+
+- name: Allow incoming www traffic
+  become: yes
+  command: ufw allow www
+
+- name: Allow incoming traffic on port 8000
+  become: yes
+  command: ufw allow 8000/tcp
+
+- name: Allow incoming traffic on port 8080
+  become: yes
+  command: ufw allow 8080/tcp
+
+- name: Enable logging
+  become: yes
+  command: ufw logging on
+
+- name: Enable UFW
+  become: yes
+  command: ufw --force enable

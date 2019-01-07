@@ -1,0 +1,15 @@
+---
+- name: Display warning about execution time
+  debug:
+    msg: The next step can take quite some time
+- name: Upgrade packages
+  become: yes
+  apt:
+    cache_valid_time: 3600
+    force: yes
+    upgrade: dist
+  register: upgrade_result
+- name: Reboot the machine
+  become: yes
+  reboot:
+  when: upgrade_result is changed

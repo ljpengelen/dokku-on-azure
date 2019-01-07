@@ -1,0 +1,58 @@
+---
+- name: Enable nginx
+  become: yes
+  debconf:
+    name: dokku
+    question: dokku/enable_nginx
+    value: true
+    vtype: boolean
+- name: Skip key file
+  become: yes
+  debconf:
+    name: dokku
+    question: dokku/skip_key_file
+    value: true
+    vtype: boolean
+- name: Disable vhost
+  become: yes
+  debconf:
+    name: dokku
+    question: dokku/vhost_enable
+    value: false
+    vtype: boolean
+- name: Disable web configuration
+  become: yes
+  debconf:
+    name: dokku
+    question: dokku/web_config
+    value: false
+    vtype: boolean
+- name: Set hostname
+  become: yes
+  debconf:
+    name: dokku
+    question: dokku/hostname
+    value: "{{ inventory_hostname }}"
+    vtype: string
+
+- name: Delete nginx configuration for web installer
+  become: yes
+  file:
+    state: absent
+    path: /etc/nginx/conf.d/dokku-installer.conf
+- name: Restart nginx
+  become: yes
+  service:
+    name: nginx
+    state: restarted
+
+- name: Delete configuration for web installer
+  become: yes
+  file:
+    state: absent
+    path: /etc/init/dokku-installer.conf
+- name: Delete service definition for web installer
+  become: yes
+  file:
+    state: absent
+    path: /etc/systemd/system/dokku-installer.service

@@ -1,0 +1,20 @@
+---
+- name: Create Dokku apps
+  command: dokku apps:create {{ item.name }}
+  args:
+    creates: /home/dokku/{{ item.name }}
+  with_items: "{{ apps }}"
+- name: Configure nginx for static apps
+  command: dokku config:set {{ item.name }} NGINX_ROOT=dist
+  when: item.static
+  with_items: "{{ apps }}"
+- name: Configure ports for static apps
+  command: dokku proxy:ports-add {{ item.name }} http:{{ item.port }}:5000
+  when: item.static
+  with_items: "{{ apps }}"
+- name: Initialize repositories for static apps
+  command: dokku git:initialize {{ item.name }}
+  args:
+    creates: /home/dokku/{{ item.name }}/branches
+  when: item.static
+  with_items: "{{ apps }}"

@@ -1,0 +1,4 @@
+---
+- name: Print affected hosts
+  debug:
+    var: play_hosts

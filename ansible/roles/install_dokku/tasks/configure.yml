@@ -1,0 +1,11 @@
+---
+- name: Set hostname in VHOST file
+  become: yes
+  copy:
+    dest: /home/dokku/VHOST
+    content: "{{ inventory_hostname }}"
+- name: Set hostname in HOSTNAME file
+  become: yes
+  copy:
+    dest: /home/dokku/HOSTNAME
+    content: "{{ inventory_hostname }}"

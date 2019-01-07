@@ -1,0 +1,22 @@
+---
+- name: Download Dokku bootstrap script
+  get_url:
+    dest: /tmp
+    url: https://raw.githubusercontent.com/dokku/dokku/{{ dokku_version }}/bootstrap.sh
+- name: Execute bootstrap script
+  environment:
+    DOKKU_TAG: "{{ dokku_version }}"
+  become: yes
+  command: bash bootstrap.sh
+  args:
+    chdir: /tmp
+    creates: /home/dokku
+
+- name: Populate service facts
+  service_facts:
+- name: Stop dokku-installer service
+  become: yes
+  service:
+    name: dokku-installer
+    state: stopped
+  when: "'dokku-installer' in services"

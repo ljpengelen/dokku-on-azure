@@ -1,0 +1,15 @@
+---
+- name: Copy public key for access to repositories
+  copy:
+    src: ~/.ssh/{{ item.key }}
+    dest: /tmp
+  with_items: "{{ public_keys }}"
+- name: Remove existing keys to grant access to repositories
+  become: yes
+  command: dokku ssh-keys:remove {{ item.id }}
+  ignore_errors: yes
+  with_items: "{{ public_keys }}"
+- name: Add key to grant access to repositories
+  become: yes
+  command: dokku ssh-keys:add {{ item.id }} /tmp/{{ item.key }}
+  with_items: "{{ public_keys }}"

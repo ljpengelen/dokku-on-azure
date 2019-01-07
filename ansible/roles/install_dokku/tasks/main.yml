@@ -1,0 +1,5 @@
+---
+- include: install.yml
+- include: configure.yml
+- include: set_up_keys.yml
+- include: clean_up.yml
