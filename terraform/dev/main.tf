@@ -12,5 +12,4 @@ module "azure_vm_dev" {
   admin_username = "${var.dev_admin_username}"
   env = "dev"
   resource_group_name = "eu-dev"
-  vm_size = "Standard_B1S"
 }
