@@ -10,6 +10,7 @@ module "azure_vm_production" {
   source = "../modules/azure_vm"
 
   admin_username = "${var.production_admin_username}"
+  computer_name = "dokku"
   env = "production"
   resource_group_name = "eu-production"
 }

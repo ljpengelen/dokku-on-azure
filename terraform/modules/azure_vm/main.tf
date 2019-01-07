@@ -1,5 +1,7 @@
 variable "admin_username" {}
 
+variable "computer_name" {}
+
 variable "env" {}
 
 variable "resource_group_name" {}
@@ -111,7 +113,7 @@ resource "azurerm_virtual_machine" "main" {
   }
 
   os_profile {
-    computer_name = "${var.env}-dokku"
+    computer_name = "${var.env}-${var.computer_name}"
     admin_username = "${var.admin_username}"
   }
 

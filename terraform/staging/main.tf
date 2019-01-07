@@ -10,6 +10,7 @@ module "azure_vm_staging" {
   source = "../modules/azure_vm"
 
   admin_username = "${var.staging_admin_username}"
+  computer_name = "dokku"
   env = "staging"
   resource_group_name = "eu-staging"
 }
