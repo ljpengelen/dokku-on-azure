@@ -6,8 +6,8 @@ provider "azurerm" {
   subscription_id = "${var.dev_subscription_id}"
 }
 
-module "dokku_on_azure_dev" {
-  source = "../modules/dokku_on_azure"
+module "azure_vm_dev" {
+  source = "../modules/azure_vm"
 
   admin_username = "${var.dev_admin_username}"
   env = "dev"

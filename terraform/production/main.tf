@@ -6,8 +6,8 @@ provider "azurerm" {
   subscription_id = "${var.production_subscription_id}"
 }
 
-module "dokku_on_azure_prd" {
-  source = "../modules/dokku_on_azure"
+module "azure_vm_production" {
+  source = "../modules/azure_vm"
 
   admin_username = "${var.production_admin_username}"
   env = "production"
