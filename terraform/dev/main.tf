@@ -12,5 +12,6 @@ module "azure_vm_dev" {
   admin_username = "${var.dev_admin_username}"
   computer_name = "dokku"
   env = "dev"
+  http-whitelist-port-ranges = ["80", "8000"]
   resource_group_name = "eu-dev"
 }

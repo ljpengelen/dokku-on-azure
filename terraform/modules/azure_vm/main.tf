@@ -14,6 +14,10 @@ variable "http-whitelist-ip-ranges" {
   default = ["0.0.0.0/0"]
 }
 
+variable "http-whitelist-port-ranges" {
+  default = ["80"]
+}
+
 variable "ssh-whitelist-ip-ranges" {
   default = ["212.78.221.106"]
 }
@@ -68,7 +72,7 @@ resource "azurerm_network_security_group" "main" {
     access = "Allow"
     protocol = "Tcp"
     source_port_range = "*"
-    destination_port_ranges = ["80", "8000", "8080"]
+    destination_port_ranges = "${var.http-whitelist-port-ranges}"
     source_address_prefixes = "${var.http-whitelist-ip-ranges}"
     destination_address_prefix = "*"
   }
