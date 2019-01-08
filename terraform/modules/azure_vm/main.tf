@@ -14,15 +14,15 @@ variable "vm_size" {
   default = "Standard_B1S"
 }
 
-variable "http-whitelist-ip-ranges" {
+variable "http_whitelist_ip_ranges" {
   default = ["0.0.0.0/0"]
 }
 
-variable "http-whitelist-port-ranges" {
+variable "http_whitelist_port_ranges" {
   default = ["80"]
 }
 
-variable "ssh-whitelist-ip-ranges" {
+variable "ssh_whitelist_ip_ranges" {
   default = ["212.78.221.106"]
 }
 
@@ -65,7 +65,7 @@ resource "azurerm_network_security_group" "main" {
     protocol = "Tcp"
     source_port_range = "*"
     destination_port_range = "22"
-    source_address_prefixes = "${var.ssh-whitelist-ip-ranges}"
+    source_address_prefixes = "${var.ssh_whitelist_ip_ranges}"
     destination_address_prefix = "*"
   }
 
@@ -76,8 +76,8 @@ resource "azurerm_network_security_group" "main" {
     access = "Allow"
     protocol = "Tcp"
     source_port_range = "*"
-    destination_port_ranges = "${var.http-whitelist-port-ranges}"
-    source_address_prefixes = "${var.http-whitelist-ip-ranges}"
+    destination_port_ranges = "${var.http_whitelist_port_ranges}"
+    source_address_prefixes = "${var.http_whitelist_ip_ranges}"
     destination_address_prefix = "*"
   }
 }

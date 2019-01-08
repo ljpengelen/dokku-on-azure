@@ -14,7 +14,7 @@ module "azure_vm_staging" {
   computer_name = "dokku"
   domain_name_label_prefix = "kabisa-dokku-demo"
   env = "staging"
-  http-whitelist-port-ranges = ["80", "8000"]
+  http_whitelist_port_ranges = ["80", "8000"]
   resource_group_name = "eu-staging"
   ssh_key_data = "${file(var.staging_ssh_key)}"
 }

@@ -14,7 +14,7 @@ module "azure_vm_production" {
   computer_name = "dokku"
   domain_name_label_prefix = "kabisa-dokku-demo"
   env = "production"
-  http-whitelist-port-ranges = ["80", "8000"]
+  http_whitelist_port_ranges = ["80", "8000"]
   resource_group_name = "eu-production"
   ssh_key_data = "${file(var.production_ssh_key)}"
 }
