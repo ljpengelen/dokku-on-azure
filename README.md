@@ -52,7 +52,7 @@ After completing all the steps above for a given environment, you've set up a vi
 ## Setting up Dokku
 
 1. Configure SSH to use the administrator keys you created above to access the VMs.
-For example, add the following to the file `~/.ssh/config` for the `dev` environment, assuming you've named the SSH key pair for this environment `azure_dokku_admin_dev`.
+For example, add the following to the file `~/.ssh/config` for the `dev` environment, assuming you've named the SSH key pair for this environment `azure_dokku_dev_admin`.
   ```
   Host kabisa-dokku-demo-dev.westeurope.cloudapp.azure.com
     IdentityFile ~/.ssh/azure_dokku_admin_dev
