@@ -35,10 +35,10 @@ This repository contains a [Terraform](https://www.terraform.io/) configuration 
   You can create a single key pair for all environments or a separate pair for each environment.
   To generate an RSA key pair with a key size of 4096 bits named `~/.ssh/azure_dokku_admin` and `~/.ssh/azure_dokku_admin` with `ssh-keygen`, execute `ssh-keygen -t rsa -b 4096 -f ~/.ssh/azure_dokku_admin`.
 1. Create a file called `secrets.tfvars` in the `terraform` folder.
-The file `secrets.example.tfvars` indicates for which variables you need to provide values.
-  * Choose usernames that meet [Azure's password complexity requirements](https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#admin_username).
-  * Refer to the public keys of the SSH key pairs you generated in the previous step.
-  * Update the subscription identifiers for each of the environments such that they correspond to one of the subscriptions associated to your Azure account.
+  The file `secrets.example.tfvars` indicates for which variables you need to provide values.
+    * Choose usernames that meet [Azure's password complexity requirements](https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#admin_username).
+    * Refer to the public keys of the SSH key pairs you generated in the previous step.
+    * Update the subscription identifiers for each of the environments such that they correspond to one of the subscriptions associated to your Azure account.
 1. Create files called `backend.tfvars` in the folders `terraform/dev`, `terraform/staging`, and `terraform/production`.
   The files `backend.example.tfvars` indicates for which variables you need to provide values.
   Refer to the name and access keys of the storage account you created for the given environment in one of the previous steps.
