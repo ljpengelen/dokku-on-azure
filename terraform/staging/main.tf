@@ -1,4 +1,5 @@
 variable "staging_admin_username" {}
+variable "staging_ssh_key" {}
 variable "staging_subscription_id" {}
 
 provider "azurerm" {
@@ -14,4 +15,5 @@ module "azure_vm_staging" {
   env = "staging"
   http-whitelist-port-ranges = ["80", "8000"]
   resource_group_name = "eu-staging"
+  ssh_key_data = "${file(var.staging_ssh_key)}"
 }

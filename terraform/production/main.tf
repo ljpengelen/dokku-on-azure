@@ -1,4 +1,5 @@
 variable "production_admin_username" {}
+variable "production_ssh_key" {}
 variable "production_subscription_id" {}
 
 provider "azurerm" {
@@ -14,4 +15,5 @@ module "azure_vm_production" {
   env = "production"
   http-whitelist-port-ranges = ["80", "8000"]
   resource_group_name = "eu-production"
+  ssh_key_data = "${file(var.production_ssh_key)}"
 }

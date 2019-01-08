@@ -1,4 +1,5 @@
 variable "dev_admin_username" {}
+variable "dev_ssh_key" {}
 variable "dev_subscription_id" {}
 
 provider "azurerm" {
@@ -14,4 +15,5 @@ module "azure_vm_dev" {
   env = "dev"
   http-whitelist-port-ranges = ["80", "8000"]
   resource_group_name = "eu-dev"
+  ssh_key_data = "${file(var.dev_ssh_key)}"
 }

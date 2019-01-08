@@ -6,6 +6,8 @@ variable "env" {}
 
 variable "resource_group_name" {}
 
+variable "ssh_key_data" {}
+
 variable "vm_size" {
   default = "Standard_B1S"
 }
@@ -125,7 +127,7 @@ resource "azurerm_virtual_machine" "main" {
     disable_password_authentication = true
 
     ssh_keys {
-      key_data = "${file("~/.ssh/azure_dokku_admin_rsa.pub")}"
+      key_data = "${var.ssh_key_data}"
       path = "/home/${var.admin_username}/.ssh/authorized_keys"
     }
   }
