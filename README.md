@@ -33,7 +33,7 @@ This repository contains a [Terraform](https://www.terraform.io/) configuration 
   Within each of the storage accounts, create a blob container.
 1. Create the SSH key pairs to access the VMs as administrator.
   You can create a single key pair for all environments or a separate pair for each environment.
-  To generate an RSA key pair with a key size of 4096 bits named `~/.ssh/azure_dokku_admin` and `~/.ssh/azure_dokku_admin` with `ssh-keygen`, execute `ssh-keygen -t rsa -b 4096 -f ~/.ssh/azure_dokku_admin`.
+  To generate an RSA key pair with a key size of 4096 bits named `~/.ssh/azure_dokku_admin.pub` and `~/.ssh/azure_dokku_admin` with `ssh-keygen`, execute `ssh-keygen -t rsa -b 4096 -f ~/.ssh/azure_dokku_admin`.
 1. Create a file called `secrets.tfvars` in the `terraform` folder.
   The file `secrets.example.tfvars` indicates for which variables you need to provide values.
     * Choose usernames that meet [Azure's password complexity requirements](https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#admin_username).
