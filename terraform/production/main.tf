@@ -12,6 +12,7 @@ module "azure_vm_production" {
 
   admin_username = "${var.production_admin_username}"
   computer_name = "dokku"
+  domain_name_label_prefix = "kabisa-dokku-demo"
   env = "production"
   http-whitelist-port-ranges = ["80", "8000"]
   resource_group_name = "eu-production"

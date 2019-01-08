@@ -2,6 +2,8 @@ variable "admin_username" {}
 
 variable "computer_name" {}
 
+variable "domain_name_label_prefix" {}
+
 variable "env" {}
 
 variable "resource_group_name" {}
@@ -47,7 +49,7 @@ resource "azurerm_public_ip" "main" {
   location = "${data.azurerm_resource_group.main.location}"
   resource_group_name = "${data.azurerm_resource_group.main.name}"
   public_ip_address_allocation = "static"
-  domain_name_label = "ips-mtk-${var.env}"
+  domain_name_label = "${var.domain_name_label_prefix}-${var.env}"
 }
 
 resource "azurerm_network_security_group" "main" {

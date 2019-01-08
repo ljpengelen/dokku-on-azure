@@ -12,6 +12,7 @@ module "azure_vm_staging" {
 
   admin_username = "${var.staging_admin_username}"
   computer_name = "dokku"
+  domain_name_label_prefix = "kabisa-dokku-demo"
   env = "staging"
   http-whitelist-port-ranges = ["80", "8000"]
   resource_group_name = "eu-staging"
