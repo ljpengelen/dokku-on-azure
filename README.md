@@ -58,6 +58,9 @@ For example, add the following to the file `~/.ssh/config` for the `dev` environ
     IdentityFile ~/.ssh/azure_dokku_admin_dev
   ```
 1. After creating the resources on Azure and configuring SSH, verify that you can log in to the created VMs via SSH.
+1. Create the SSH key pairs to access the Git repositories managed by Dokku.
+  You can create a single key pair for all environments or a separate pair for each environment.
+  If you only want to deploy to each environment from a single machine, such as an instance of [Jenkins](https://jenkins.io/), a single key is fine.
 1. Enter the folder `ansible`.
 1. Execute `ansible-playbook -i <environment> -e @secrets.yml dokku.yml` to set up Dokku, where `<environment>` should be one of `dev`, `staging`, and `production`.
 
