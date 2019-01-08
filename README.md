@@ -57,9 +57,7 @@ For example, add the following to the file `~/.ssh/config` for the `dev` environ
   Host kabisa-dokku-demo-dev.westeurope.cloudapp.azure.com
     IdentityFile ~/.ssh/azure_dokku_admin_dev
   ```
-1. After creating the resources on Azure, verify that you can log in to the created VM via SSH.
-  The username is specified in the secret files mentioned above.
-  The SSH keys are also listed above.
+1. After creating the resources on Azure and configuring SSH, verify that you can log in to the created VMs via SSH.
 1. Enter the folder `ansible`.
 1. Execute `ansible-playbook -i <environment> -e @secrets.yml dokku.yml` to set up Dokku, where `<environment>` should be one of `dev`, `staging`, and `production`.
 
