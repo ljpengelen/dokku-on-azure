@@ -13,6 +13,13 @@ provider "azurerm" {
   subscription_id = "${var.staging_subscription_id}"
 }
 
+terraform {
+  backend "azurerm" {
+    container_name = "terraform-state"
+    key = "staging.terraform.tfstate"
+  }
+}
+
 module "azure_vm_staging" {
   source = "../modules/azure_vm"
 

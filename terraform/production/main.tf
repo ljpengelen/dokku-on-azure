@@ -13,6 +13,13 @@ provider "azurerm" {
   subscription_id = "${var.production_subscription_id}"
 }
 
+terraform {
+  backend "azurerm" {
+    container_name = "terraform-state"
+    key = "production.terraform.tfstate"
+  }
+}
+
 module "azure_vm_production" {
   source = "../modules/azure_vm"
 
