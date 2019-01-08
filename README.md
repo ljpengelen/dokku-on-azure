@@ -2,32 +2,52 @@
 
 This repository contains a [Terraform](https://www.terraform.io/) configuration and an [Ansible](https://www.ansible.com/) playbook to set up a VM running Dokku on [Microsoft Azure](https://azure.microsoft.com/).
 
-## Getting Started
+## Installing dependencies
 
 1. Install [Terraform](https://www.terraform.io/), a tool for managing infrastructure as code.
   On macOS, you can install Terraform with [brew](https://brew.sh/): `brew install terraform`.
 1. Install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
-  On macOS, you can install the Azure CLI with brew: `brew install azure-cli`.
+  If you use brew, execute `brew install azure-cli`.
 1. Create an [Azure account](https://azure.microsoft.com/) if you don't have one already.
-1. Create the SSH keys to access the VMs as administrator and store them in `~/.ssh/azure_dokku_admin.pub` and `~/.ssh/azure_dokku_admin`.
-  To generate RSA keys with a key size of 4096 bits, execute `ssh-keygen -t rsa -b 4096 -f ~/.ssh/azure_dokku_admin`.
-1. Configure SSH to use the administrator keys mentioned above to access the VMs.
-1. Create the SSH keys to access the Git repositories managed by Dokku and store them in `~/.ssh/azure_dokku_git.pub` and `~/.ssh/azure_dokku_git`.
-  To generate RSA keys with a key size of 4096 bits, execute `ssh-keygen -t rsa -b 4096 -f ~/.ssh/azure_dokku_git`.
-1. Obtain the files `terraform/secrets.tfvars` and `ansible/secrets.yml`, containing the username for the administrator account.
-  Alternatively, create new files containing a username that meets [Azure's password complexity requirements](https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#admin_username).
+  Experimenting with the code in this repository will cost you next to nothing.
 1. Install [Ansible](https://www.ansible.com/).
-  On macOS, you can install Ansible with brew: `brew install ansible`.
+  If you use brew, execute `brew install ansible`.
 
 ## Creating resources on Azure
 
 1. Log in to Azure by executing `az login` and following the instructions.
   After logging in, you'll see a list of subscriptions associated to your Azure account.
-  Instruct Azure to use the subscription for which you'd like to set up or update the infrastructure by executing `az account set --subscription="SUBSCRIPTION_ID"`.
+  If you want to use a different subscription for each of the environments, log in to the [Azure Portal](https://portal.azure.com/) and create additional subscriptions.
+  If you do so, you can easily see how much each environment costs.
+  However, using the same subscription for each environment is also fine.
+1. Log in to the [Azure Portal](https://portal.azure.com/) and create a resource group for each of the environments.
+  The name of the resource group used for the development environment should be named `eu-dev`.
+  This name is used in the file `terraform/dev/main.tf`.
+  Similarly, the resource group for staging should be named `eu-staging`, which is used in `terraform/staging/main.tf`,
+  and the resource group for production should be named `eu-production`, which is used in `terraform/production/main.tf`.
+  Make sure that the resource group you create for a given environment is part of the subscription for that environment.
+1. In the Azure Portal, create one or more storage accounts.
+  Blobs stored in Azure storage accounts can be used by Terraform to store the state of the infrastructure it manages.
+  By storing this state online, it can be shared by multiple developers.
+  You could use a separate storage account for each environment, but a single one works fine too.
+  Within each of the storage accounts, create a blob container.
+1. Create the SSH key pairs to access the VMs as administrator.
+  You can create a single key pair for all environments or a separate pair for each environment.
+  To generate an RSA key pair with a key size of 4096 bits named `~/.ssh/azure_dokku_admin` and `~/.ssh/azure_dokku_admin` with `ssh-keygen`, execute `ssh-keygen -t rsa -b 4096 -f ~/.ssh/azure_dokku_admin`.
+1. Create a file called `secrets.tfvars` in the `terraform` folder.
+  The file `secrets.example.tfvars` indicates for which variables you need to provide values.
+  * Choose usernames that meet [Azure's password complexity requirements](https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#admin_username).
+  * Refer to the public keys of the SSH key pairs you generated in the previous step.
+  * Update the subscription identifiers for each of the environments such that they correspond to one of the subscriptions associated to your Azure account.
+1. Create files called `backend.tfvars` in the folders `terraform/dev`, `terraform/staging`, and `terraform/production`.
+  The files `backend.example.tfvars` indicates for which variables you need to provide values.
+  Refer to the name and access keys of the storage account you created for the given environment in one of the previous steps.
 1. Enter the folder `terraform`.
 1. Enter the folder for the environment you'd like to set up, either `dev`, `staging`, or `production`.
-1. Execute `terraform init`.
-1. Execute `terraform apply -var-file=../secrets.tfvars`.
+1. Execute `terraform init -backend-config=backend.tfvars`.
+1. Execute `terraform apply -var-file=../secrets.tfvars -var-file=../common.tfvars`.
+
+After completing all the steps above for a given environment, you've set up a virtual machine running Ubuntu on Microsoft Azure that is publicly accessible via HTTP on ports 80 and 8000 and via SSH from a single IP address.
 
 ## Setting up Dokku
 
