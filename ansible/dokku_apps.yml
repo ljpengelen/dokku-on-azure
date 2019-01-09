@@ -1,0 +1,12 @@
+---
+- hosts: dokku
+  vars:
+    apps:
+      - { name: back-end, static: no }
+      - { name: front-end, static: yes, port: 80 }
+  remote_user: "{{ admin_username }}"
+  roles:
+    - configure_dokku_apps
+  tasks:
+  - name: Configure dokku-dockerfile plugin
+    command: dokku dockerfile:set back-end dockerfiles/deploy/Dockerfile

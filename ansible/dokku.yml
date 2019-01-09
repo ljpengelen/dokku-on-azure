@@ -1,9 +1,6 @@
 ---
 - hosts: dokku
   vars:
-    apps:
-      - { name: back-end, static: no }
-      - { name: front-end, static: yes, port: 80 }
     dokku_version: v0.14.0
     ports:
       - 80
@@ -14,12 +11,9 @@
     - upgrade_apt_packages
     - secure_server
     - install_dokku
-    - configure_dokku_apps
   tasks:
   - name: Install dokku-dockerfile plugin
     become: yes
     command: dokku plugin:install https://github.com/mimischi/dokku-dockerfile.git
     args:
       creates: /var/lib/dokku/plugins/available/dockerfile
-  - name: Configure dokku-dockerfile plugin
-    command: dokku dockerfile:set back-end back-end/dockerfiles/deploy/Dockerfile
