@@ -63,19 +63,39 @@ For example, add the following to the file `~/.ssh/config` for the `dev` environ
 1. Create the SSH key pairs to access the Git repositories managed by Dokku.
   You can create a single key pair for all environments or a separate pair for each environment.
   If you only want to deploy to each environment from a single machine, such as an instance of [Jenkins](https://jenkins.io/), a single key is fine.
+1. Create a file called `dokku.yml` in the folders `inventories/<env>/group_vars` for each environment.
+  The files `dokku.example.yaml` indicate for which variables you need to provide values.
+    * The usernames must match those that you configured for Terraform.
+    * The SSH keys for administrators must match those that you configured for Terraform.
+    * The SSH keys for access to the Git repositories managed by Dokku must be those created in the previous step.
 1. Enter the folder `ansible`.
-1. Execute `ansible-playbook -i <environment> -e @secrets.yml dokku.yml` to set up Dokku, where `<environment>` should be one of `dev`, `staging`, and `production`.
+1. Execute `ansible-playbook -i inventories/<env> dokku.yml` to set up Dokku, where `<env>` should be one of `dev`, `staging`, and `production`.
 
-## Giving Jenkins access to Dokku repositories
+## Deploying apps
 
-After setting up Dokku, you need to ensure that Jenkins is able to access the Git repositories managed by Dokku.
+After you've completed the steps above, you might want to see whether you can actually deploy apps.
+To do that, you'll need to configure Dokku.
 
-1. Log in to the machine running Jenkins.
-1. Clone the repository for the front-end to a temporary folder by executing `git clone dokku@kabisa-dokku-demo-<env>.westeurope.cloudapp.azure.com:front-end /tmp/deploy-front-end`, where `<env>` is one of `dev`, `staging`, and `production`.
+1. Enter the folder `ansible`.
+1. Execute `ansible-playbook -i inventories/<env> dokku_apps.yml` to set up two apps, where `<env>` should be one of `dev`, `staging`, and `production`.
 
-If this succeeds without any errors, Jenkins is able to access the Git repositories managed by Dokku.
-If not, one or more of the following issues must be resolved.
+To deploy a static front end, execute the following steps.
 
-* If you see an error regarding host key verification, ensure that the new host key is correct and add it to the `known_hosts` configuration file for SSH.
-* If you see a warning stating that the authenticity of the host cannot be established, ensure that the host key is correct and continue connecting.
-* If permission to read the repository is denied, update the configuration of SSH to use the correct key.
+1. Clone the repository for the front end to a temporary folder by executing `git clone dokku@kabisa-dokku-demo-<env>.westeurope.cloudapp.azure.com:front-end /tmp/deploy-front-end`, where `<env>` is one of `dev`, `staging`, and `production`.
+1. Enter the folder `tmp/deploy-front-end`.
+1. Create a file called `.static` by executing `touch .static`.
+1. Create a folder called `dist` by executing `mkdir dist`.
+1. Create a file called `dist/index.html` by executing `echo "<html><body>Hello world</body></html>" >> dist/index.html`.
+1. Deploy this front end by executing `git add . && git commit -m "Deploy" && git push`.
+
+If you visit `kabisa-dokku-demo-<env>.westeurope.cloudapp.azure.com` in a browser, you should see the front end you just deployed.
+
+To deploy a back end defined by a Dockerfile, execute the following steps.
+
+1. Create a folder `tmp/deploy-back-end/dockerfiles/deploy`.
+1. Enter the folder `tmp/deploy-back-end`.
+1. Initialize a Git repository by executing `git init`.
+1. Create a Dockerfile by executing `echo "FROM google/python-hello" >> dockerfiles/deploy/Dockerfile`.
+1. Deploy the application defined by the Dockerfile by executing `git add . && git commit -m "Deploy" && git push -f dokku@$kabisa-dokku-demo-<env>.westeurope.cloudapp.azure.com:back-end HEAD:refs/heads/master`, where `<env>` is one of `dev`, `staging`, and `production`.
+
+If you visit `kabisa-dokku-demo-<env>.westeurope.cloudapp.azure.com:8080` in a browser, you should see the back end you just deployed.
