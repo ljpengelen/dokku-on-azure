@@ -1,6 +1,6 @@
 # Dokku on Azure
 
-This repository contains a [Terraform](https://www.terraform.io/) configuration and an [Ansible](https://www.ansible.com/) playbook to set up a VM running Dokku on [Microsoft Azure](https://azure.microsoft.com/).
+This repository contains a [Terraform](https://www.terraform.io/) configuration and an [Ansible](https://www.ansible.com/) playbook to set up a VM running [Dokku](http://dokku.viewdocs.io/dokku/) on [Microsoft Azure](https://azure.microsoft.com/).
 
 ## Installing dependencies
 
