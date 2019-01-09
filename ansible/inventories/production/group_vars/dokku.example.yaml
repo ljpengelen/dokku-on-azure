@@ -1,0 +1,4 @@
+admin_username: secret
+public_keys:
+  - { id: admin, key: azure_dokku_dev_admin.pub }
+  - { id: deploy, key: azure_dokku_dev_git.pub }

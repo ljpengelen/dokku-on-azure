@@ -4,9 +4,6 @@
     apps:
       - { name: back-end, static: no }
       - { name: front-end, static: yes, port: 80 }
-    public_keys:
-      - { id: admin, key: azure_dokku_admin_rsa.pub }
-      - { id: deploy, key: azure_dokku_git_rsa.pub }
     dokku_version: v0.14.0
     ports:
       - 80
