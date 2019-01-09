@@ -15,17 +15,10 @@
   become: yes
   command: ufw allow ssh
 
-- name: Allow incoming www traffic
+- name: Allow incoming traffic on configured ports
   become: yes
-  command: ufw allow www
-
-- name: Allow incoming traffic on port 8000
-  become: yes
-  command: ufw allow 8000/tcp
-
-- name: Allow incoming traffic on port 8080
-  become: yes
-  command: ufw allow 8080/tcp
+  command: ufw allow {{ item }}/tcp
+  with_items: "{{ ports }}"
 
 - name: Enable logging
   become: yes

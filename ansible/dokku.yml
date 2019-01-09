@@ -8,6 +8,9 @@
       - { id: admin, key: azure_dokku_admin_rsa.pub }
       - { id: deploy, key: azure_dokku_git_rsa.pub }
     dokku_version: v0.14.0
+    ports:
+      - 80
+      - 8080
   remote_user: "{{ admin_username }}"
   roles:
     - print_affected_hosts
