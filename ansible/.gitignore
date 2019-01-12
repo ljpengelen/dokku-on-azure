@@ -1,3 +1,3 @@
-dokku.retry
+*.retry
 
 **/group_vars/dokku.yml
