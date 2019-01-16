@@ -47,7 +47,7 @@ This repository contains a [Terraform](https://www.terraform.io/) configuration 
 1. Execute `terraform init -backend-config=backend.tfvars`.
 1. Execute `terraform apply -var-file=../secrets.tfvars -var-file=../common.tfvars`.
 
-After completing all the steps above for a given environment, you've set up a virtual machine running Ubuntu on Microsoft Azure that is publicly accessible via HTTP on ports 80 and 8000 and via SSH from a single IP address.
+After completing all the steps above for a given environment, you've set up a virtual machine running Ubuntu on Microsoft Azure that is publicly accessible via HTTP on ports 80 and 8080 and via SSH from a single IP address.
 
 Once you're done with your experiments, you can clean up by running `terraform destroy -var-file=../secrets.tfvars -var-file=../common.tfvars`.
 
